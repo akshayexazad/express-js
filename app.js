@@ -1,16 +1,21 @@
 // let http = require('http');
 const express = require('express')
 const app = express();
+const bodyParser = require('body-parser');
+
+const adminRoute=require('./route/admin');
+
+const shoproute= require('./route/shop')
+
 
 // let route = require('./router')
+app.use(bodyParser.urlencoded({extended:false}))
+
+app.use('/admin',adminRoute);
+app.use(shoproute);
 app.use((req,res,next)=>{
-    console.log("i am in middlewere1")
-    next()
-});
-app.use((req,res,next)=>{
-    console.log("i am in middlewere2")
-    res.send('<h1>hello from Express js</h1>')
-});
+    res.status(404).send('<h1>page not found</h1>')
+})
 
 app.listen(5001);
 
